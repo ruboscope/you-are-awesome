@@ -1,6 +1,9 @@
 // DO WHATEVER YOU WANT HERE
+var incCount = 0;
+var asyncIncCount = 0;
 
-const createEnumerableProperty = (propertyName) => {propertyName};
+//Воспользуемся https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+const createEnumerableProperty = (propertyName) => { return propertyName };
 const createNotEnumerableProperty = (propertyName) => {
   Object.defineProperty(Object.prototype, propertyName, {
     enumerable: false,
@@ -9,17 +12,36 @@ const createNotEnumerableProperty = (propertyName) => {
   });
   return propertyName;
 };
-const createProtoMagicObject = () => {};
-const incrementor = () => {};
-const asyncIncrementor = () => {};
-const createIncrementer = () => {};
+
+// Будем возвращать Function instance;
+const createProtoMagicObject = () => { return Function; };
+
+const incrementor = () => {
+  incCount++;
+  Function.prototype.valueOf = function () {
+    return incCount;
+  };
+  return incrementor;
+};
+
+
+const asyncIncrementor = () => {
+  asyncIncCount++;
+  Function.prototype.valueOf = function () {
+    return asyncIncCount;
+  };
+  return asyncIncrementor;
+};
+
+
+const createIncrementer = () => { };
 
 // return same argument not earlier than in one second, and not later, than in two
-const returnBackInSecond = () => {};
-const getDeepPropertiesCount = () => {};
-const createSerializedObject = () => {};
-const toBuffer = () => {};
-const sortByProto = () => {};
+const returnBackInSecond = () => { };
+const getDeepPropertiesCount = () => { };
+const createSerializedObject = () => { };
+const toBuffer = () => { };
+const sortByProto = () => { };
 
 exports.createEnumerableProperty = createEnumerableProperty;
 exports.createNotEnumerableProperty = createNotEnumerableProperty;
