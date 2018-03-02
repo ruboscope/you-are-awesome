@@ -1,6 +1,7 @@
 // DO WHATEVER YOU WANT HERE
 var incCount = 0;
 var asyncIncCount = 0;
+var createIncCount = 0;
 
 //Воспользуемся https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
 const createEnumerableProperty = (propertyName) => { return propertyName };
@@ -33,8 +34,13 @@ const asyncIncrementor = () => {
   return asyncIncrementor;
 };
 
-
-const createIncrementer = () => { };
+// О-О-О, даже использовали функцию-генератор https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Statements/function*
+function* createIncrementer() {
+  var count = 1;
+  while (true){
+    yield count++;
+  }
+};
 
 // return same argument not earlier than in one second, and not later, than in two
 const returnBackInSecond = () => { };
