@@ -43,7 +43,14 @@ function* createIncrementer() {
 };
 
 // return same argument not earlier than in one second, and not later, than in two
-const returnBackInSecond = () => { };
+//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
+const returnBackInSecond = (param) => { 
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(param);
+    }, 1000);
+  });
+};
 const getDeepPropertiesCount = () => { };
 const createSerializedObject = () => { };
 const toBuffer = () => { };
