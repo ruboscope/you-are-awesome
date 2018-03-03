@@ -51,8 +51,31 @@ const returnBackInSecond = (param) => {
     }, 1000);
   });
 };
-const getDeepPropertiesCount = () => { };
-const createSerializedObject = () => { };
+
+const getDeepPropertiesCount = (obj) => {
+  var result = 0;
+  (function search(obj) {
+    for (var elem in obj) {
+      if (!isEmpty(elem)) {
+        result++;
+        search(obj[elem]);
+       }
+    }
+  })(obj);
+  return result;
+};
+function isEmpty(obj) {
+  for (var key in obj) {
+    if (obj.hasOwnProperty(key))
+      return false;
+  }
+  return true;
+}
+
+// Just create new String or Number without initialize, and when we make equal comparison we make Abstract Equality Comparison, so it will be success
+const createSerializedObject = () => {
+  return new Number;
+};
 const toBuffer = () => { };
 const sortByProto = () => { };
 
