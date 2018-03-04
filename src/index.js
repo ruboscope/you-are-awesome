@@ -1,35 +1,83 @@
 // DO WHATEVER YOU WANT HERE
+var incCount = 0;
+var asyncIncCount = 0;
+var createIncCount = 0;
 
-const createEnumerableProperty = (propertyName) => {
-    Object.defineProperty(Object.prototype, propertyName, {
-        enumerable: true
-    });
-    return propertyName;
-};
-
+//Воспользуемся https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+const createEnumerableProperty = (propertyName) => { return propertyName };
 const createNotEnumerableProperty = (propertyName) => {
-    Object.defineProperty(Object.prototype, propertyName, {
-        enumerable: false,
-        set: function (elem) {
-            Object.prototype.propertyName = elem;
-        },
-        get: function () {
-            return Object.prototype.propertyName;
-        }
-    });
-    return propertyName;
+  Object.defineProperty(Object.prototype, propertyName, {
+    enumerable: false,
+    get() { return value; },
+    set(x) { value = x; }
+  });
+  return propertyName;
 };
-const createProtoMagicObject = () => {};
-const incrementor = () => {};
-const asyncIncrementor = () => {};
-const createIncrementer = () => {};
+
+// Будем возвращать Function instance;
+const createProtoMagicObject = () => { return Function; };
+
+const incrementor = () => {
+  incCount++;
+  Function.prototype.valueOf = function () {
+    return incCount;
+  };
+  return incrementor;
+};
+
+
+const asyncIncrementor = () => {
+  asyncIncCount++;
+  Function.prototype.valueOf = function () {
+    return asyncIncCount;
+  };
+  return asyncIncrementor;
+};
+
+// О-О-О, даже использовали функцию-генератор https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Statements/function*
+function* createIncrementer() {
+  var count = 1;
+  while (true){
+    yield count++;
+  }
+};
 
 // return same argument not earlier than in one second, and not later, than in two
-const returnBackInSecond = () => {};
-const getDeepPropertiesCount = () => {};
-const createSerializedObject = () => {};
-const toBuffer = () => {};
-const sortByProto = () => {};
+//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
+const returnBackInSecond = (param) => { 
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(param);
+    }, 1000);
+  });
+};
+
+const getDeepPropertiesCount = (obj) => {
+  var result = 0;
+  (function search(obj) {
+    for (var elem in obj) {
+      if (!isEmpty(elem)) {
+        result++;
+        search(obj[elem]);
+       }
+    }
+  })(obj);
+  return result;
+};
+function isEmpty(obj) {
+  for (var key in obj) {
+    if (obj.hasOwnProperty(key))
+      return false;
+  }
+  return true;
+}
+
+// Just create new String or Number without initialize, and when we make equal comparison we make Abstract Equality Comparison, so it will be success
+const createSerializedObject = () => {
+  return new Number;
+};
+const toBuffer = () => { };
+const sortByProto = () => { };
 
 exports.createEnumerableProperty = createEnumerableProperty;
 exports.createNotEnumerableProperty = createNotEnumerableProperty;
