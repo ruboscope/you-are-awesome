@@ -35,7 +35,7 @@ const asyncIncrementor = () => {
 };
 
 // О-О-О, даже использовали функцию-генератор https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Statements/function*
-function* createIncrementer() {
+createIncrementer = function*() {
   var count = 1;
   while (true){
     yield count++;
@@ -64,7 +64,7 @@ const getDeepPropertiesCount = (obj) => {
   })(obj);
   return result;
 };
-function isEmpty(obj) {
+isEmpty = function(obj) {
   for (var key in obj) {
     if (obj.hasOwnProperty(key))
       return false;
@@ -76,8 +76,14 @@ function isEmpty(obj) {
 const createSerializedObject = () => {
   return new Number;
 };
-const toBuffer = () => { };
-const sortByProto = () => { };
+const sortByProto = (array) => {
+  array.sort(objSort);
+  return array;
+};
+
+objSort = function(prev, next) {
+  return prev - next;
+}
 
 exports.createEnumerableProperty = createEnumerableProperty;
 exports.createNotEnumerableProperty = createNotEnumerableProperty;
